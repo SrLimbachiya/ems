@@ -4,7 +4,9 @@ namespace app\controllers;
 
 use app\models\Employee;
 use app\models\search\EmployeeSearch;
+use components\HelperComponent;
 use yii\filters\AccessControl;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -77,9 +79,14 @@ class EmployeeController extends Controller
     public function actionCreate()
     {
         $model = new Employee();
-
+        $model->id = HelperComponent::generateId();
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                if ($model->save()) {
+                    \Yii::$app->getSession()->setFlash('success', 'Employee created successfully.');
+                } else {
+                    \Yii::$app->getSession()->setFlash('danger', Html::errorSummary($model));
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {

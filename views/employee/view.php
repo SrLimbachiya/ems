@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card-header d-flex justify-content-between align-items-center">
         <h3><?= Html::encode($this->title) ?></h3>
         <div>
-            <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
             <?= Html::a('Delete', ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [

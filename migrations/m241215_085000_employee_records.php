@@ -16,7 +16,7 @@ class m241215_085000_employee_records extends Migration
         if (!$tableSchema) {
             echo "Table Doesn't Exist\nCreating 'employee_records' Table.\n";
             $this->createTable('employee_records', [
-                'id' => $this->primaryKey(),
+                'id' => $this->string(50)->notNull()->unique(),
                 'employee_code' => $this->string(50),
                 'first_name' => $this->string(50),
                 'middle_name' => $this->string(50),

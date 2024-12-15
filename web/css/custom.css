@@ -1710,8 +1710,10 @@ input:focus-visible {
 
 .alert-primary {
     color: #ffffff;
-    background-color: #5c76f5;
-    border-color: #5c76f5;
+    /*background-color: #5c76f5;*/
+    /*border-color: #5c76f5;*/
+    background-color: #31829C;
+    border-color: #31829C;
     border-radius: 8px;
 }
 
