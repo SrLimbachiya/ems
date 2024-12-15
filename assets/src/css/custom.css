@@ -1708,12 +1708,6 @@ input:focus-visible {
     margin-top: 20px;
 }
 
-.alert-primary {
-    color: #ffffff;
-    background-color: #5c76f5;
-    border-color: #5c76f5;
-    border-radius: 8px;
-}
 
 .alert-primary.alert-dismissible .btn-close {
     filter: invert(1);
@@ -1751,9 +1745,6 @@ div#w2 {
     z-index: 1113 !important;
 }
 
-.bg-primary {
-    background-color: rgba(92, 96, 245, .88) !important;
-}
 
 .line-height-2 {
     line-height: 2;
