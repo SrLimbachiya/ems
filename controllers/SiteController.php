@@ -41,28 +41,37 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function actions()
+
+//    public function actions()
+//    {
+//        return [
+//            'error' => [
+//                'class' => 'yii\web\ErrorAction',
+//                'on beforeRender' => function ($event) {
+//                    $exception = Yii::$app->errorHandler->exception;
+//
+//                    if ($exception instanceof \yii\web\NotFoundHttpException) {
+//                        Yii::$app->response->redirect(['dashboard/index'])->send();
+//                        Yii::$app->end();
+//                    }
+//                },
+//            ],
+//        ];
+//    }
+
+    public function actionError()
     {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
-        ];
+        $exception = Yii::$app->errorHandler->exception;
+
+        if ($exception instanceof \yii\web\NotFoundHttpException) {
+            return $this->redirect(['dashboard/index']);
+        }
+
+        // Handle other errors if needed
+        return $this->render('error', ['exception' => $exception, 'name' => 'some error', 'message' => 'some message']);
     }
 
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
-    public function actionIndex()
-    {
-        return $this->render('index');
-    }
+
 
     /**
      * Login action.
@@ -79,7 +88,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect(['dashboard/index']);
         }
 
         $model->password = '';
@@ -96,8 +105,7 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
-        return $this->goHome();
+        return $this->redirect(['login']);
     }
 
     /**

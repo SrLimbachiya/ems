@@ -2,7 +2,6 @@
 
 use yii\widgets\Menu;
 \app\assets\AppAsset::register($this);
-
 ?>
 
 <?php

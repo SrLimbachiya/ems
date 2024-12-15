@@ -130,7 +130,8 @@
 }
 
 .btn-primary {
-    background-color: #5C76F5;
+    /*background-color: #5C76F5;*/
+    background-color: #31829C;
     color: #fff;
     opacity: 0.9;
     border-radius: 8px;

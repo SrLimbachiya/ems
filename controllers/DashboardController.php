@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use components\HelperComponent;
+use components\SideBarMenuItems;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -54,6 +56,18 @@ class DashboardController extends Controller
         ];
     }
 
+
+    public function beforeAction($action) {
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
+        if (Yii::$app->user->isGuest) {
+            $this->redirect(['/site/login']);
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Displays homepage.
      *
@@ -61,9 +75,7 @@ class DashboardController extends Controller
      */
     public function actionIndex()
     {
-        echo "<pre>";
-        var_dump('sdsd');
-        die('DONE');
+        return $this->render('index');
     }
 
 }

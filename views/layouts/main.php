@@ -1,5 +1,6 @@
 <?php
 
+use components\SideBarMenuItems;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use app\themes\samarth3\assets\SamarthThemeAsset;
@@ -10,12 +11,14 @@ use uims\core\modules\core\models\PortalContent;
 $home = Yii::$app->request->BaseUrl;
 \app\assets\AppAsset::register($this);
 
+Yii::$app->params['left-side-menu-item'] = SideBarMenuItems::getAdminItems();
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
-    <!--        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
+            <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <!--    // add favicon-->
@@ -39,7 +42,6 @@ $home = Yii::$app->request->BaseUrl;
     <!-- Main Content -->
     <div id="content">
         <div class="container-fluid">
-            <?= $this->render('page_level_menu') ?>
             <div id="wrapper-level2" class="row <?php if (empty(Yii::$app->params['left-side-menu-item'])) {
                 echo "pl-wrapper";
             } ?>">
