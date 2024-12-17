@@ -39,8 +39,7 @@ use yii\db\ActiveRecord;
 class Employee extends ActiveRecord
 {
 
-    const STATUS_ACTIVE = 'ACTIVE';
-    const STATUS_INACTIVE = 'INACTIVE';
+
     /**
      * {@inheritdoc}
      */
@@ -108,19 +107,20 @@ class Employee extends ActiveRecord
     public function behaviors()
     {
         return [
-            TimestampBehavior::class,
             [
-                'class' => BlameableBehavior::class,
+                'class' => BlameableBehavior::className(), //BlameableBehavior automatically fills the specified attributes with the current user ID.
                 'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => 'updated_by',
+            ],
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
             ],
         ];
     }
 
-    public static function getEmployeeStatus() {
-        return [
-            self::STATUS_ACTIVE => 'Active',
-            self::STATUS_INACTIVE => 'Inactive',
-        ];
-    }
+
 }

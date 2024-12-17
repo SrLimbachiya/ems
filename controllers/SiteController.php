@@ -67,8 +67,9 @@ class SiteController extends Controller
             return $this->redirect(['dashboard/index']);
         }
 
+        throw $exception;
         // Handle other errors if needed
-        return $this->render('error', ['exception' => $exception, 'name' => 'some error', 'message' => 'some message']);
+//        return $this->render('error', ['exception' => $exception, 'name' => 'some error', 'message' => 'some message']);
     }
 
 

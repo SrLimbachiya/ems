@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
+use components\Masters;
+use kartik\depdrop\DepDrop;
+use yii\helpers\Url;
 
 /** @var yii\web\View $this */
 /** @var app\models\Employee $model */
@@ -47,13 +50,17 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="row">
-        <?= $form->field($model, 'department')->textInput() ?>
+        <?= $form->field($model, 'department')->widget(\kartik\select2\Select2::class, [
+                'data' => \app\models\Departments::getAllActive(),
+            'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+            'options' => ['placeholder' => '-- Select --'],
+        ]) ?>
         <?= $form->field($model, 'designation')->textInput() ?>
     </div>
 
     <div class="row">
-        <?= $form->field($model, 'gender')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'category')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'gender')->dropDownList(Masters::getGenders(), ['prompt' => '-- Select --']) ?>
+        <?= $form->field($model, 'category')->dropDownList(Masters::getCategory(), ['prompt' => '-- Select --']) ?>
 
         <?= $form->field($model, 'birth_date')->widget(DatePicker::class, [
             'dateFormat' => 'yyyy-MM-dd',
@@ -91,20 +98,58 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="row">
-        <?= $form->field($model, 'country')->textInput(['maxlength' => true]) ?>
+        <!--        --><?php //= $form->field($model, 'country')->dropDownList(\app\models\CountryMaster::getCountry(), ['prompt'=>'-- Select --']) ?>
+        <?= $form->field($model, 'country')->widget(\kartik\select2\Select2::class, [
+            'data' => \app\models\CountryMaster::getCountry(),
+            'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+            'options' => ['placeholder' => '-- Select --'],
+        ]) ?>
 
-        <?= $form->field($model, 'state')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'state')->widget(DepDrop::class, [
+            'data' => [$model->state => $model->state],
+            'type' => DepDrop::TYPE_SELECT2,
+            'select2Options' => [
+                'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ],
+            'pluginOptions' => [
+                'initialize' => $model->isNewRecord ? false : true,
+                'depends' => ['employee-country'],
+                'placeholder' => 'Select...',
+                'url' => Url::to(['/masters/get-state'])
+            ],
+            'options' => ['class' => 'form-control']
+        ]) ?>
     </div>
 
     <div class="row">
-        <?= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>
+<!--        --><?php //= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'city')->widget(DepDrop::class, [
+            'data' => [$model->city => $model->city],
+            'type' => DepDrop::TYPE_SELECT2,
+            'select2Options' => [
+                'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ],
+            'pluginOptions' => [
+                'initialize' => $model->isNewRecord ? false : true,
+                'depends' => ['employee-state'],
+                'placeholder' => 'Select...',
+                'url' => Url::to(['/masters/get-city'])
+            ],
+            'options' => ['class' => 'form-control']
+        ]) ?>
 
         <?= $form->field($model, 'pincode')->textInput(['maxlength' => true]) ?>
     </div>
 
     <div class="row">
         <?= $form->field($model, 'address')->textarea(['maxlength' => true]) ?>
-        <?= $form->field($model, 'status')->dropDownList(\app\models\Employee::getEmployeeStatus(), ['prompt' => '-- select employee status --']) ?>
+        <?= $form->field($model, 'status')->dropDownList(\components\Masters::getStatus(), ['prompt' => '-- select employee status --']) ?>
     </div>
 
     <div class="form-group">

@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h3><?= Html::encode($this->title) ?></h3>
-            <?= Html::a('Create Employee', ['create'], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Create Employee', ['create'], ['class' => 'btn btn-success']) ?>
     </div>
     <div class="card-body">
         <div class="employee-index overflow-auto">
