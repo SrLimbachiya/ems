@@ -74,6 +74,7 @@ class m241217_154019_designation_master extends Migration
 
         }
     }
+
     /**
      * {@inheritdoc}
      */

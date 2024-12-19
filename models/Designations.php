@@ -76,6 +76,4 @@ class Designations extends \yii\db\ActiveRecord
             ],
         ];
     }
-
-
 }

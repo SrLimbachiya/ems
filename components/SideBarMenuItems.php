@@ -8,7 +8,6 @@ class SideBarMenuItems
     public static function getAdminItems()
     {
         $items = [];
-
         array_push($items,
             [
                 'class' => 'submenu',
@@ -17,8 +16,7 @@ class SideBarMenuItems
                     ['label' => 'Dashboard', 'url' => ['/dashboard/index']],
                     ['label' => 'All Employees', 'url' => ['/employee/index']],
                     ['label' => 'Settings', 'options' => ['class' => 'menu-head']],
-                    ['label' => 'Masters', 'url' => ['/masters/index']],
-
+                    ['label' => 'Masters', 'url' => ['/masters/index']]
                 ]
             ]
         );

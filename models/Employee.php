@@ -121,6 +121,4 @@ class Employee extends ActiveRecord
             ],
         ];
     }
-
-
 }
