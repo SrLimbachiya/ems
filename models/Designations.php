@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use components\Masters;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\BlameableBehavior;
@@ -75,5 +76,22 @@ class Designations extends \yii\db\ActiveRecord
                 ],
             ],
         ];
+    }
+
+    public static function resolveDesignationName($desId) {
+        $model = self::findOne($desId);
+        if (!empty($model)) {
+            return $model->name;
+        }
+        return 'NA';
+    }
+
+    public static function getAllActive() {
+        $models = self::find()->where(['status' => Masters::STATUS_ACTIVE])->all();
+        $finalData = [];
+        foreach ($models as $model) {
+            $finalData[$model->id] = $model->name;
+        }
+        return $finalData;
     }
 }

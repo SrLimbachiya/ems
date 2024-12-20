@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Employees', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="employee-view card">
+<div class="employee-view card shadow">
 
     <div class="card-header d-flex justify-content-between align-items-center">
         <h3><?= Html::encode($this->title) ?></h3>

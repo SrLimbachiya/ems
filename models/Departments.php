@@ -89,4 +89,12 @@ class Departments extends \yii\db\ActiveRecord
         return $finalData;
     }
 
+    public static function resolveDepartmentName($depId) {
+        $model = self::findOne($depId);
+        if (!empty($model)) {
+            return $model->name;
+        }
+        return 'NA';
+    }
+
 }

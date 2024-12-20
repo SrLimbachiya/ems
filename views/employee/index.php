@@ -12,8 +12,12 @@ use yii\grid\GridView;
 
 $this->title = 'All Employees';
 $this->params['breadcrumbs'][] = $this->title;
+
+$departments = \app\models\Departments::getAllActive();
+$designations = \app\models\Designations::getAllActive();
+
 ?>
-<div class="card">
+<div class="card shadow">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h3><?= Html::encode($this->title) ?></h3>
             <?= Html::a('Create Employee', ['create'], ['class' => 'btn btn-success']) ?>
@@ -32,8 +36,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'tableOptions' => ['class' => 'table table-bordered table-striped table-hover'], // Add Bootstrap classes
                 'summaryOptions' => ['class' => 'summary mb-3'], // Style summary
                 'pager' => [
-                    'class' => 'yii\widgets\LinkPager',
-                    'options' => ['class' => 'pagination pagination-sm justify-content-center'], // Style pagination
+                    'options' => ['class' => 'pagination pagination-sm'],
+                    'activePageCssClass' => 'active',
+                    'maxButtonCount' => 5,
+                    'linkOptions' => [
+                        'class' => 'page-link', // Custom class for <a> elements
+                    ],
                 ],
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
@@ -64,17 +72,43 @@ $this->params['breadcrumbs'][] = $this->title;
                     'last_name',
                     [
                         'attribute' => 'department',
-                        'filter' => [], // Add a filter dropdown for departments
-                        'value' => function ($model) {
-                            return $model->department; // Assuming a `getDepartmentName()` relation
+                        'value' => function ($model) use ($departments) {
+                            return $departments[$model->department] ?? '';
                         },
+                        'filter' => \kartik\select2\Select2::widget([
+                            'model' => $searchModel,
+                            'attribute' => 'department', // The field to filter
+                            'data' => $departments, // Populate from the Designation model
+                            'theme' => \kartik\select2\Select2::THEME_KRAJEE_BS5,
+                            'options' => [
+                                'placeholder' => 'Select a department...',
+                                'multiple' => false,
+                            ],
+                            'pluginOptions' => [
+                                'allowClear' => true, // Allow clearing the selection
+                                'minimumInputLength' => 1, // Allow search (start typing to search)
+                            ],
+                        ]),
                     ],
                     [
                         'attribute' => 'designation',
-                        'filter' => [], // Add a filter dropdown for designations
-                        'value' => function ($model) {
-                            return $model->designation; // Assuming a `getDesignationName()` relation
+                        'value' => function ($model) use ($designations) {
+                            return $designations[$model->designation] ?? $model->designation;
                         },
+                        'filter' => \kartik\select2\Select2::widget([
+                            'model' => $searchModel,
+                            'attribute' => 'designation', // The field to filter
+                            'data' => $designations, // Populate from the Designation model
+                            'theme' => \kartik\select2\Select2::THEME_KRAJEE_BS5,
+                            'options' => [
+                                'placeholder' => 'Select a designation...',
+                                'multiple' => false,
+                            ],
+                            'pluginOptions' => [
+                                'allowClear' => true, // Allow clearing the selection
+                                'minimumInputLength' => 1, // Allow search (start typing to search)
+                            ],
+                        ]),
                     ],
                     'birth_date:date', // Format as date
                     'joining_date:date', // Format as date

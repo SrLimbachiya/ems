@@ -9,7 +9,7 @@ $this->title = 'Create Employee';
 $this->params['breadcrumbs'][] = ['label' => 'Employees', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="card">
+<div class="card shadow">
     <div class="card-header">
         <h3>Creating Employee Record</h3>
     </div>

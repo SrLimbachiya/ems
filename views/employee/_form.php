@@ -12,22 +12,6 @@ use yii\helpers\Url;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-
-<!--<div class="row">-->
-<!--    <div class="col-md-6">-->
-<!--        <div class="form-group">-->
-<!--            <label id="name-label" for="name">Name</label>-->
-<!--            <input type="text" name="name" id="name" placeholder="Enter your name" class="form-control" required>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="col-md-6">-->
-<!--        <div class="form-group">-->
-<!--            <label id="email-label" for="email">Email</label>-->
-<!--            <input type="email" name="email" id="email" placeholder="Enter your email" class="form-control" required>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
 <div class="row">
 
     <?php $form = ActiveForm::begin([
