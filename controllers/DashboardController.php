@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Departments;
 use components\HelperComponent;
 use components\SideBarMenuItems;
 use Yii;
@@ -75,7 +76,57 @@ class DashboardController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+
+        $genderRaw = (new \yii\db\Query())
+            ->select([
+                'gender',
+                'COUNT(ems.id) AS count',
+            ])->from('employee_records ems')
+            ->groupBy('ems.gender')->all();
+
+
+        $departmentRaw = (new \yii\db\Query())
+            ->select([
+                'dep.id',
+                'name',
+                'COUNT(ems.id) AS count',
+            ])->from('department_master dep')->leftJoin('employee_records ems', 'ems.department = dep.id')
+            ->groupBy('dep.id')
+            ->orderBy(['count' => SORT_DESC]);
+
+        $designationRaw = (new \yii\db\Query())
+            ->select([
+                'dep.id',
+                'name',
+                'COUNT(ems.id) AS count',
+            ])->from('designation_master dep')->leftJoin('employee_records ems', 'ems.designation = dep.id')
+            ->groupBy('dep.id')
+            ->orderBy(['count' => SORT_DESC])->all();
+
+        // Paginated Data Provider
+        $dataProvider = new \yii\data\ArrayDataProvider([
+            'allModels' => $departmentRaw->all(),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        // Full Data Provider (for client-side filtering)
+        $fullDataProvider = new \yii\data\ArrayDataProvider([
+            'allModels' => $departmentRaw->all(),
+            'pagination' => false, // Disable pagination for full data
+        ]);
+
+
+
+
+        return $this->render('index',[
+            'genderData' => $genderRaw,
+            'designationData' => $designationRaw,
+            'departmentData' => $departmentRaw,
+            'dataProvider' => $dataProvider,
+            'fullDataProvider' => $fullDataProvider,
+        ]);
     }
 
 }
