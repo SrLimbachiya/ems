@@ -118,14 +118,20 @@ class DashboardController extends Controller
         ]);
 
 
-
-
+        $empCount = (new \yii\db\Query())
+            ->select([
+                'SUM(CASE WHEN ems.status = "Active" THEN 1 ELSE 0 END) AS active_emp',
+                'SUM(CASE WHEN ems.status = "Inactive" THEN 1 ELSE 0 END) AS inactive_emp',
+                'COUNT(*) AS total_emp',
+            ])->from('employee_records ems')
+            ->all();
         return $this->render('index',[
-            'genderData' => $genderRaw,
-            'designationData' => $designationRaw,
-            'departmentData' => $departmentRaw,
-            'dataProvider' => $dataProvider,
-            'fullDataProvider' => $fullDataProvider,
+            'empCount' => $empCount[0] ?? ['active_emp' => 0, 'inactive_emp' => 0, 'total_emp' => 0],
+            'genderData' => $genderRaw ?? [],
+            'designationData' => $designationRaw ?? [],
+            'departmentData' => $departmentRaw ?? [],
+            'dataProvider' => $dataProvider ?? [],
+            'fullDataProvider' => $fullDataProvider ?? [],
         ]);
     }
 

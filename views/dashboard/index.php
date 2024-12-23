@@ -1,12 +1,49 @@
 <?php
-$cardHeight = '450px';
+$cardHeight = '550px';
 ?>
-<div class="d-flex justify-content-between gap-3">
-    <div class="card p-3 shadow" style="height: <?= $cardHeight ?>; width: 40%">
-        <canvas id="gender-chart" style="height: 100%" ></canvas>
+<div class="row gap-3">
+    <div class="col-md-4 d-flex flex-column gap-3 m-0" style="height: <?= $cardHeight ?>">
+        <div class="card p-3 shadow d-flex m-0" style=" width: 100%; height: 100%">
+            <div class="d-flex justify-content-between" style=" width: 100%; height: 50%">
+                <div class="text-center d-flex flex-column justify-content-center align-items-center"
+                     style="width: 50%; border-right: 1px solid #F2F2F2">
+                    <h2 class="fw-bold"><?= $empCount['active_emp'] ?></h2>
+                    <p>Active Employees</p>
+                </div>
+                <div class="text-center m-0 d-flex flex-column justify-content-center align-items-center "
+                     style="width: 50%">
+                    <h2 class="fw-bold"><?= $empCount['inactive_emp'] ?></h2>
+                    <p>In-Active Employees</p>
+                </div>
+            </div>
+            <hr>
+            <div class="d-flex flex-column justify-content-center align-items-center text-center"
+                 style="width: 100%; height: 50%">
+                <h1 class="fw-bold"><?= $empCount['total_emp'] ?></h1>
+                <div id="totalEmps">
+                    <a class="text-dark" href="<?= \yii\helpers\Url::to(['/employee/index']) ?>">
+                        <p id="empText">Total Employees</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card p-3 flex-grow shadow" style="height: 250px;">
+<!--            // cat-->
+        </div>
     </div>
-    <div class="card flex-grow-1 p-3 shadow" style="height: <?= $cardHeight ?>">
-        <canvas id="designation-chart" style="height: 100%"></canvas>
+
+    <div class="col-md-8 row p-0 flex-grow-1 gap-3" style="height: 100%">
+        <div class="col-md-6 card p-3 shadow m-0" style="height: <?= $cardHeight ?>">
+            <canvas id="designation-chart" style="height: 100%"></canvas>
+        </div>
+        <div class="d-flex justify-content-between align-items-center col-md-5 card shadow ">
+            <div style="border-bottom: 1px solid #F2F2F2" class="pb-4">
+                <canvas id="gender-chart" style="height: 100%; width:100%"></canvas>
+            </div>
+            <div>
+
+            </div>
+        </div>
     </div>
 </div>
 
@@ -23,7 +60,7 @@ $cardHeight = '450px';
                     'attribute' => 'name',
                     'label' => 'Department',
                     'format' => 'raw',
-                    'value' => function($model){
+                    'value' => function ($model) {
                         return \yii\helpers\Html::a($model['name'], ['/employee/index', 'EmployeeSearch' => ['department' => $model['id']]]);
                     }
                 ],
@@ -35,7 +72,6 @@ $cardHeight = '450px';
         ]); ?>
     </div>
 </div>
-
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.js"
@@ -62,7 +98,7 @@ $cardHeight = '450px';
             labels: designationLabels,
             datasets: [
                 {
-                    label: 'Designations',
+                    label: 'Employees by Designations',
                     data: designationCount,
                     backgroundColor: ['#9aa88c', '#8ca8a8', '#9a8ca8', '#aaaaaa', '#697f85', '#7a7290', '#497c9d'],
                     borderColor: '#4549ff',
@@ -93,7 +129,7 @@ $cardHeight = '450px';
                 tooltip: {
                     callbacks: {
                         label: function (context) {
-                            let label = context.dataset.label || '';
+                            let label = 'Employee On Position';
                             if (label) {
                                 label += ': ';
                             }
@@ -116,7 +152,7 @@ $cardHeight = '450px';
                     beginAtZero: true,
                     max: function () {
                         const maxValue = Math.max(...designationCount);
-                        const roundedMax = Math.ceil((maxValue + 40) / 10) * 10;
+                        const roundedMax = Math.ceil((maxValue + 10) / 10) * 10;
                         return roundedMax;
                     }(),
                 }
@@ -124,8 +160,6 @@ $cardHeight = '450px';
         },
         plugins: [ChartDataLabels] // Add this line to include the plugin
     });
-
-
 
 
     const papersByStatus = document.getElementById('gender-chart').getContext('2d');
@@ -147,7 +181,7 @@ $cardHeight = '450px';
         }
     })
     new Chart(papersByStatus, {
-        type: 'bar',
+        type: 'pie',
         data: {
             labels: ['Male', 'Female', 'Other'],
             datasets: [
@@ -166,10 +200,10 @@ $cardHeight = '450px';
             plugins: {
                 datalabels: {
                     anchor: 'end', // Position at the top of the bar
-                    align: 'end', // Align the label above the top
+                    align: 'start', // Align the label above the top
                     offset: 0, // Move label slightly above the top of the bar
                     clip: false, // Ensure label is not clipped (visible outside chart area)
-                    color: 'rgba(0,0,0,0.38)', // Color of the labels
+                    color: 'rgb(255,255,255)', // Color of the labels
                     font: {
                         weight: 'bold',
                     },
@@ -183,7 +217,7 @@ $cardHeight = '450px';
                 tooltip: {
                     callbacks: {
                         label: function (context) {
-                            let label = context.dataset.label || '';
+                            let label = 'Total Employees';
                             if (label) {
                                 label += ': ';
                             }
@@ -195,27 +229,9 @@ $cardHeight = '450px';
                     }
                 }
             },
-            scales: {
-                x: {
-                    stacked: false,
-                    barPercentage: 0.3, // Adjust width of bars
-                    categoryPercentage: 0.8 // Adjust width of groups
-                },
-                y: {
-                    stacked: false,
-                    beginAtZero: true,
-                    max: function () {
-                        const maxValue = Math.max(...genderData);
-                        const roundedMax = Math.ceil((maxValue + 40) / 10) * 10;
-                        return roundedMax;
-                    }(),
-                }
-            }
         },
         plugins: [ChartDataLabels] // Add this line to include the plugin
     });
-
-
 
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -260,7 +276,22 @@ $cardHeight = '450px';
 
         document.getElementById('department-filter').addEventListener('input', filterGridView);
 
+
+        $('#totalEmps').mouseover(function () {
+            $('#empText').fadeOut(150, function () {
+                $(this).text('Click To View All Employee').fadeIn(150);
+            });
+        });
+
+        $('#totalEmps').mouseout(function () {
+            $('#empText').fadeOut(150, function () {
+                $(this).text('Total Employee').fadeIn(150);
+            });
+        });
+
+
     });
 
 
 </script>
+

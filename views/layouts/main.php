@@ -53,9 +53,11 @@ Yii::$app->params['left-side-menu-item'] = SideBarMenuItems::getAdminItems();
                 if (!empty(Yii::$app->params['left-side-menu-item'])) {
                     echo "col-lg-10 toggleCol";
                 } ?>">
-                    <?= $this->render('inner_top_menu') ?>
-                    <?= $this->render('alerts') ?>
-                    <?= $content ?>
+                    <div style="width: 100%!important; margin: 0; padding: 0;">
+                        <?= $this->render('inner_top_menu') ?>
+                        <?= $this->render('alerts') ?>
+                        <?= $content ?>
+                    </div>
                 </div>
                 <?php if (!empty(Yii::$app->params['left-side-menu-item'])) { ?>
                 <?php } ?>
