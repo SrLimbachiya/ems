@@ -53,7 +53,7 @@ $this->title = 'Login - Samarth eGov Suite';
 
     <div class="login">
 
-        <div class="container">
+        <div class="container" style="margin-top: 10%">
             <?= $this->render('alerts') ?>
         </div>
 

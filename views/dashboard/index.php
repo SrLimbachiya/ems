@@ -1,12 +1,6 @@
 <?php
-
-
 $cardHeight = '450px';
 ?>
-
-
-
-
 <div class="d-flex justify-content-between gap-3">
     <div class="card p-3 shadow" style="height: <?= $cardHeight ?>; width: 40%">
         <canvas id="gender-chart" style="height: 100%" ></canvas>
