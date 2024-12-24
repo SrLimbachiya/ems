@@ -15,6 +15,7 @@ use yii\db\ActiveRecord;
  * @property string|null $first_name
  * @property string|null $middle_name
  * @property string|null $last_name
+ * @property string|null $type
  * @property int|null $department
  * @property int|null $designation
  * @property string|null $birth_date
@@ -54,7 +55,7 @@ class Employee extends ActiveRecord
     public function rules()
     {
         return [
-            [['first_name', 'employee_code', 'department', 'designation','last_name', 'gender', 'category', 'country', 'state', 'city', 'status', 'birth_date', 'joining_date'], 'required'],
+            [['first_name', 'type', 'employee_code', 'department', 'designation','last_name', 'gender', 'category', 'country', 'state', 'city', 'status', 'birth_date', 'joining_date'], 'required'],
             [['department', 'designation', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['employee_code', 'first_name', 'middle_name', 'last_name', 'gender', 'category', 'country', 'state', 'city', 'status'], 'string', 'max' => 50],
             [['retirement_date','birth_date', 'joining_date'], 'string', 'max' => 50],

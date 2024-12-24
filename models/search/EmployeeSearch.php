@@ -18,7 +18,7 @@ class EmployeeSearch extends Employee
     {
         return [
             [['id', 'department', 'designation', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['employee_code', 'first_name', 'middle_name', 'last_name', 'birth_date', 'joining_date', 'retirement_date', 'gender', 'category', 'country', 'state', 'city', 'pincode', 'address', 'phone_no', 'email', 'status', 'ip'], 'safe'],
+            [['employee_code', 'type', 'first_name', 'middle_name', 'last_name', 'birth_date', 'joining_date', 'retirement_date', 'gender', 'category', 'country', 'state', 'city', 'pincode', 'address', 'phone_no', 'email', 'status', 'ip'], 'safe'],
         ];
     }
 
@@ -62,6 +62,7 @@ class EmployeeSearch extends Employee
             'id' => $this->id,
             'department' => $this->department,
             'designation' => $this->designation,
+            'type' => $this->type,
             'birth_date' => $this->birth_date,
             'joining_date' => $this->joining_date,
             'created_at' => $this->created_at,
