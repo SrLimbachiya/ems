@@ -217,12 +217,12 @@ $cardHeight = '550px';
                 tooltip: {
                     callbacks: {
                         label: function (context) {
-                            let label = 'Total Employees';
+                            let label = 'Total ';
                             if (label) {
-                                label += ': ';
+                                label += context.label+': ';
                             }
-                            if (context.parsed.y !== null) {
-                                label += context.parsed.y;
+                            if (context.parsed !== null) {
+                                label += context.parsed;
                             }
                             return label;
                         }
