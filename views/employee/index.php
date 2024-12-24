@@ -15,6 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $departments = \app\models\Departments::getAllActive();
 $designations = \app\models\Designations::getAllActive();
+$countries = \app\models\CountryMaster::getAllCountries();
+$states = \app\models\StateMaster::getAllStates();
+$cities = \app\models\CityMaster::getAllCities();
 
 ?>
 <div class="card shadow">
@@ -110,19 +113,78 @@ $designations = \app\models\Designations::getAllActive();
                             ],
                         ]),
                     ],
-                    'birth_date:date', // Format as date
-                    'joining_date:date', // Format as date
-                    'retirement_date',
                     [
                         'attribute' => 'gender',
-                        'filter' => ['Male' => 'Male', 'Female' => 'Female'], // Add filter options
+                        'filter' => \components\Masters::getGenders(), // Add filter options
                     ],
-                    'category',
-                    'country',
-                    'state',
-                    'city',
+                    [
+                        'attribute' => 'category',
+                        'filter' => \components\Masters::getCategory(), // Add filter options
+                    ],
+                    'birth_date', // Format as date
+                    'joining_date', // Format as date
+                    'retirement_date',
+                    [
+                        'attribute' => 'country',
+                        'value' => function ($model) use ($countries) {
+                            return $countries[$model->country] ?? $model->country;
+                        },
+                        'filter' => \kartik\select2\Select2::widget([
+                            'model' => $searchModel,
+                            'attribute' => 'country', // The field to filter
+                            'data' => $countries, // Populate from the Designation model
+                            'theme' => \kartik\select2\Select2::THEME_KRAJEE_BS5,
+                            'options' => [
+                                'placeholder' => 'Select a country...',
+                                'multiple' => false,
+                            ],
+                            'pluginOptions' => [
+                                'allowClear' => true, // Allow clearing the selection
+                                'minimumInputLength' => 1, // Allow search (start typing to search)
+                            ],
+                        ]),
+                    ],
+                    [
+                        'attribute' => 'state',
+                        'value' => function ($model) use ($states) {
+                            return $states[$model->state] ?? $model->state;
+                        },
+                        'filter' => \kartik\select2\Select2::widget([
+                            'model' => $searchModel,
+                            'attribute' => 'state',
+                            'data' => $states,
+                            'theme' => \kartik\select2\Select2::THEME_KRAJEE_BS5,
+                            'options' => [
+                                'placeholder' => 'Select a state...',
+                                'multiple' => false,
+                            ],
+                            'pluginOptions' => [
+                                'allowClear' => true,
+                                'minimumInputLength' => 1,
+                            ],
+                        ]),
+                    ],
+                    [
+                        'attribute' => 'city',
+                        'value' => function ($model) use ($cities) {
+                            return $cities[$model->state] ?? $model->state;
+                        },
+                        'filter' => \kartik\select2\Select2::widget([
+                            'model' => $searchModel,
+                            'attribute' => 'city',
+                            'data' => $cities,
+                            'theme' => \kartik\select2\Select2::THEME_KRAJEE_BS5,
+                            'options' => [
+                                'placeholder' => 'Select a city...',
+                                'multiple' => false,
+                            ],
+                            'pluginOptions' => [
+                                'allowClear' => true,
+                                'minimumInputLength' => 1,
+                            ],
+                        ]),
+                    ],
                     'pincode',
-
                 ],
             ]); ?>
 

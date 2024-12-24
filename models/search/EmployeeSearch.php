@@ -63,12 +63,15 @@ class EmployeeSearch extends Employee
             'department' => $this->department,
             'designation' => $this->designation,
             'type' => $this->type,
-            'birth_date' => $this->birth_date,
-            'joining_date' => $this->joining_date,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
+            'country' => $this->country,
+            'state' => $this->state,
+            'city' => $this->city,
+            'gender' => $this->gender,
+            'category' => $this->category,
         ]);
 
         $query->andFilterWhere(['like', 'employee_code', $this->employee_code])
@@ -76,11 +79,8 @@ class EmployeeSearch extends Employee
             ->andFilterWhere(['like', 'middle_name', $this->middle_name])
             ->andFilterWhere(['like', 'last_name', $this->last_name])
             ->andFilterWhere(['like', 'retirement_date', $this->retirement_date])
-            ->andFilterWhere(['like', 'gender', $this->gender])
-            ->andFilterWhere(['like', 'category', $this->category])
-            ->andFilterWhere(['like', 'country', $this->country])
-            ->andFilterWhere(['like', 'state', $this->state])
-            ->andFilterWhere(['like', 'city', $this->city])
+            ->andFilterWhere(['like', 'birth_date', $this->birth_date])
+            ->andFilterWhere(['like', 'joining_date', $this->joining_date])
             ->andFilterWhere(['like', 'pincode', $this->pincode])
             ->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'phone_no', $this->phone_no])
