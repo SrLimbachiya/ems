@@ -7,8 +7,14 @@ class Masters
 
     const STATUS_ACTIVE = 'ACTIVE';
     const STATUS_INACTIVE = 'INACTIVE';
-    const EMP_TYPE_PERMANENT = 'PERMANENT';
-    const EMP_TYPE_CONTRACTUAL = 'CONTRACTUAL';
+    const EMP_TYPE_PERMANENT = 'Permanent';
+    const EMP_TYPE_CONTRACTUAL = 'Contractual';
+
+    const GENDER_MALE = 'Male';
+    const GENDER_FEMALE = 'Female';
+    const GENDER_OTHER = 'Other';
+
+
 
     public static function getStatus() {
         return [
@@ -25,11 +31,25 @@ class Masters
     }
 
     public static function getGenders() {
-        return ['Male', 'Female', 'Other'];
+        return [
+            self::GENDER_MALE => 'Male',
+            self::GENDER_FEMALE => 'Female',
+            self::GENDER_OTHER => 'Other',
+        ];
     }
 
+    const SOCIAL_CATEGORY_UNRESERVED = 'Unreserved';
+    const SOCIAL_CATEGORY_OBC = 'OBC';
+    const SOCIAL_CATEGORY_SC = 'SC';
+    const SOCIAL_CATEGORY_ST = 'ST';
+
    public static function getCategory() {
-        return ['Unreserved', 'OCB', 'SC', 'ST'];
+        return [
+          self::SOCIAL_CATEGORY_UNRESERVED => 'Unreserved',
+          self::SOCIAL_CATEGORY_OBC => 'OBC',
+          self::SOCIAL_CATEGORY_SC => 'SC',
+          self::SOCIAL_CATEGORY_ST => 'ST',
+        ];
     }
 
 }
