@@ -10,6 +10,8 @@ $this->title = $model->first_name.' '.$model->last_name.' ('.$model->employee_co
 $this->params['breadcrumbs'][] = ['label' => 'Employees', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+
+
 ?>
 <div class="employee-view card shadow">
 
@@ -31,11 +33,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-   <div class="card-body p-4 pl-5">
-       <div class="row">
+
+
+    <div class="card-body p-4">
+       <div class="row gx-3 gy-2">
            <?= DetailView::widget([
                'model' => $model,
-               'template' => '<div style="width:45%; height: auto; min-height: 45px; padding:0px; border:solid 1px #c7c7c7; flex-grow: 1" class="mr-3 row mb-0 rounded mb-1"><div class="col-6 fw-bold d-flex align-items-center border-right">{label}</div><div class="col-6 d-flex align-items-center">{value}</div></div>',
+               'template' => '<div class="col-md-6 col-sm-12 flex-grow-1">
+                                <div class="d-flex border rounded align-items-center">
+                                    <div class="col-6 fw-bold p-3 border-end">{label}</div>
+                                    <div class="col-6 p-3">{value}</div>
+                                </div>
+                            </div>',
                'attributes' => [
                    'employee_code',
                    'first_name',
@@ -56,8 +65,18 @@ $this->params['breadcrumbs'][] = $this->title;
                    'phone_no',
                    'email:email',
                    'status',
-                   'created_at',
-                   'created_by',
+                   [
+                       'attribute' => 'created_at',
+                       'value' => function($model) {
+                            return date('Y-m-d h:iA', $model->created_at);
+                       }
+                   ],
+                   [
+                           'attribute' => 'created_by',
+                       'value' => function($model) {
+                            return \app\models\User::findIdentity($model->created_by)->username ?? 'NA';
+                       }
+                   ],
                ],
            ]) ?>
        </div>

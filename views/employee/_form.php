@@ -16,7 +16,7 @@ use yii\helpers\Url;
 
     <?php $form = ActiveForm::begin([
         'fieldConfig' => [
-            'template' => "<div class='form-group col-11 mb-4'>{label}\n{input}\n{hint}</div>{error}",
+            'template' => "<div class='form-group col-11 mb-4'>{label}\n{input}\n{hint}{error}</div>",
             'options' => [
                 'class' => 'col-md-6' // Each field will take 6 columns out of 12
             ]
@@ -25,27 +25,34 @@ use yii\helpers\Url;
 
     <div class="row">
         <?= $form->field($model, 'employee_code')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'type')->dropDownList(Masters::getEmployeeTypes(), ['prompt' => '-- Select --']) ?>
+    </div>
+
+    <div class="row">
         <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>
-    </div>
-
-    <div class="row">
         <?= $form->field($model, 'middle_name')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
     </div>
 
     <div class="row">
+        <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'department')->widget(\kartik\select2\Select2::class, [
                 'data' => \app\models\Departments::getAllActive(),
             'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
             'options' => ['placeholder' => '-- Select --'],
         ]) ?>
-        <?= $form->field($model, 'designation')->textInput() ?>
     </div>
 
     <div class="row">
+        <?= $form->field($model, 'designation')->widget(\kartik\select2\Select2::class, [
+            'data' => \app\models\Designations::getAllActive(),
+            'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+            'options' => ['placeholder' => '-- Select --'],
+        ]) ?>
         <?= $form->field($model, 'gender')->dropDownList(Masters::getGenders(), ['prompt' => '-- Select --']) ?>
-        <?= $form->field($model, 'category')->dropDownList(Masters::getCategory(), ['prompt' => '-- Select --']) ?>
+    </div>
 
+    <div class="row">
+        <?= $form->field($model, 'category')->dropDownList(Masters::getCategory(), ['prompt' => '-- Select --']) ?>
         <?= $form->field($model, 'birth_date')->widget(DatePicker::class, [
             'dateFormat' => 'yyyy-MM-dd',
             'options' => ['class' => 'form-control', 'placeholder' => 'Select Date of birth', 'readonly' => true],
