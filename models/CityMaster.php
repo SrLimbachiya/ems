@@ -48,4 +48,21 @@ class CityMaster extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function getAllCities() {
+        $models = self::find()->cache(0)->select(['id', 'name'])->all();
+        $finalData = [];
+        foreach ($models as $model) {
+            $finalData[$model->id] = $model->name;
+        }
+        return $finalData;
+    }
+
+    public static function getCityById($id) {
+       $allCities = self::getAllCities();
+       if (!empty($allCities[$id])) {
+           return $allCities[$id];
+       }
+       return "NA";
+    }
+
 }

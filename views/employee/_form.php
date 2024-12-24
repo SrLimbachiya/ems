@@ -91,7 +91,7 @@ use yii\helpers\Url;
     <div class="row">
         <!--        --><?php //= $form->field($model, 'country')->dropDownList(\app\models\CountryMaster::getCountry(), ['prompt'=>'-- Select --']) ?>
         <?= $form->field($model, 'country')->widget(\kartik\select2\Select2::class, [
-            'data' => \app\models\CountryMaster::getCountry(),
+            'data' => \app\models\CountryMaster::getAllCountries(),
             'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
             'options' => ['placeholder' => '-- Select --'],
         ]) ?>
@@ -145,6 +145,7 @@ use yii\helpers\Url;
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Cancel', Url::to(Yii::$app->request->referrer), ['class' => 'btn btn-danger']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

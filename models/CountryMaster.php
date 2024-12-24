@@ -59,13 +59,21 @@ class CountryMaster extends \yii\db\ActiveRecord
     }
 
 
-    public static function getCountry() {
+    public static function getAllCountries() {
         $models = self::find()->cache(0)->select(['id', 'name'])->all();
         $finalData = [];
         foreach ($models as $model) {
             $finalData[$model->id] = $model->name;
         }
         return $finalData;
+    }
+
+    public static function getCountryById($id) {
+        $allCities = self::getAllCountries();
+        if (!empty($allCities[$id])) {
+            return $allCities[$id];
+        }
+        return "NA";
     }
 
 }

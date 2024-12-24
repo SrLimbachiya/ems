@@ -65,6 +65,7 @@ class Employee extends ActiveRecord
             [['email'], 'string', 'max' => 80],
             [['ip'], 'string', 'max' => 20],
             [['email'], 'email'],
+            [['employee_code'], 'unique'],
         ];
     }
 

@@ -44,4 +44,21 @@ class StateMaster extends \yii\db\ActiveRecord
             'country_id' => 'Country ID',
         ];
     }
+
+    public static function getAllStates() {
+        $models = self::find()->cache(0)->select(['id', 'name'])->all();
+        $finalData = [];
+        foreach ($models as $model) {
+            $finalData[$model->id] = $model->name;
+        }
+        return $finalData;
+    }
+
+    public static function getStateById($id) {
+        $allCities = self::getAllStates();
+        if (!empty($allCities[$id])) {
+            return $allCities[$id];
+        }
+        return "NA";
+    }
 }
