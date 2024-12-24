@@ -125,6 +125,19 @@ class DashboardController extends Controller
                 'COUNT(*) AS total_emp',
             ])->from('employee_records ems')
             ->all();
+
+
+        $categoryData = (new \yii\db\Query())
+            ->select([
+                'ems.category as category',
+                'COUNT(ems.id) AS count',
+            ])
+            ->from('employee_records ems')
+            ->groupBy('ems.category')->all();
+
+
+
+
         return $this->render('index',[
             'empCount' => $empCount[0] ?? ['active_emp' => 0, 'inactive_emp' => 0, 'total_emp' => 0],
             'genderData' => $genderRaw ?? [],
@@ -132,6 +145,7 @@ class DashboardController extends Controller
             'departmentData' => $departmentRaw ?? [],
             'dataProvider' => $dataProvider ?? [],
             'fullDataProvider' => $fullDataProvider ?? [],
+            'categoryData' => $categoryData ?? [],
         ]);
     }
 

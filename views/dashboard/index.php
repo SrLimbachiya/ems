@@ -29,6 +29,7 @@ $cardHeight = '550px';
         </div>
         <div class="card p-3 flex-grow shadow" style="height: 250px;">
 <!--            // cat-->
+            <canvas id="category-chart" style="height: 100%; width:100%"></canvas>
         </div>
     </div>
 
@@ -82,6 +83,82 @@ $cardHeight = '550px';
 
 
 <script>
+
+    const categoryChart = document.getElementById('category-chart').getContext('2d');
+    const categoryData = <?= json_encode($categoryData) ?>;
+    const categoryLabels = categoryData.map(item => {
+        return item.category;
+    });
+    const categoryCount = categoryData.map(item => {
+        return item.count;
+    });
+
+    new Chart(categoryChart, {
+        type: 'bar',
+        data: {
+            labels: categoryLabels,
+            datasets: [
+                {
+                    label: 'Employees by Social Category',
+                    data: categoryCount,
+                    backgroundColor: ['#9aa88c', '#8ca8a8', '#9a8ca8', '#aaaaaa', '#697f85', '#7a7290', '#497c9d'],
+                    borderColor: '#4549ff',
+                    borderWidth: 0,
+                },
+            ]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            plugins: {
+                datalabels: {
+                    anchor: 'end', // Position at the top of the bar
+                    align: 'end', // Align the label above the top
+                    offset: 0, // Move label slightly above the top of the bar
+                    clip: false, // Ensure label is not clipped (visible outside chart area)
+                    color: 'rgba(0,0,0,0.38)', // Color of the labels
+                    font: {
+                        weight: 'bold',
+                    },
+                    formatter: function (value) {
+                        return value; // Display the actual data value
+                    }
+                },
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            let label = context.label+' Employees: ';
+                            if (context.parsed.y !== null) {
+                                label += context.parsed.y;
+                            }
+                            return label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    stacked: false,
+                    barPercentage: 0.3, // Adjust width of bars
+                    categoryPercentage: 0.8 // Adjust width of groups
+                },
+                x: {
+                    stacked: false,
+                    beginAtZero: true,
+                    max: function () {
+                        const maxValue = Math.max(...categoryCount);
+                        const roundedMax = Math.ceil((maxValue + 10) / 10) * 10;
+                        return roundedMax;
+                    }(),
+                }
+            }
+        },
+        plugins: [ChartDataLabels] // Add this line to include the plugin
+    });
+
 
     const designationChart = document.getElementById('designation-chart').getContext('2d');
     const designationData = <?= json_encode($designationData) ?>;
