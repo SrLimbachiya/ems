@@ -26,12 +26,14 @@ $cities = \app\models\CityMaster::getAllCities();
             <?= Html::a('Create Employee', ['create'], ['class' => 'btn btn-success']) ?>
     </div>
     <div class="card-body">
+
         <div class="employee-index overflow-auto">
 
 
 
 
             <!--    --><?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+            <?= Html::a('Reset Filters', ['index'], ['class' => 'btn btn-secondary float-right']) ?>
 
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
