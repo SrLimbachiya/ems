@@ -3,23 +3,23 @@ $cardHeight = '550px';
 ?>
 <div class="row gap-3">
     <div class="col-md-4 d-flex flex-column gap-3 m-0" style="height: <?= $cardHeight ?>">
-        <div class="card p-3 shadow d-flex m-0" style=" width: 100%; height: 100%">
-            <div class="d-flex justify-content-between" style=" width: 100%; height: 50%">
+        <div class="card p-3 shadow d-flex m-0" style=" width: 100%; height: 70%">
+            <div class="d-flex justify-content-between" style=" width: 100%; height: 40%">
                 <div class="text-center d-flex flex-column justify-content-center align-items-center"
                      style="width: 50%; border-right: 1px solid #F2F2F2">
-                    <h2 class="fw-bold"><?= $empCount['active_emp'] ?></h2>
+                    <h1 class="fw-bold"><?= $empCount['active_emp'] ?></h1>
                     <p>Active Employees</p>
                 </div>
                 <div class="text-center m-0 d-flex flex-column justify-content-center align-items-center "
                      style="width: 50%">
-                    <h2 class="fw-bold"><?= $empCount['inactive_emp'] ?></h2>
+                    <h1 class="fw-bold"><?= $empCount['inactive_emp'] ?></h1>
                     <p>In-Active Employees</p>
                 </div>
             </div>
             <hr>
             <div class="d-flex flex-column justify-content-center align-items-center text-center"
                  style="width: 100%; height: 50%">
-                <h1 class="fw-bold"><?= $empCount['total_emp'] ?></h1>
+                <h1 class="fw-bold" style="font-size: 4rem"><?= $empCount['total_emp'] ?></h1>
                 <div id="totalEmps">
                     <a class="text-dark" href="<?= \yii\helpers\Url::to(['/employee/index']) ?>">
                         <p id="empText">Total Employees</p>

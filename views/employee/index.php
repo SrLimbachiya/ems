@@ -48,7 +48,7 @@ $cities = \app\models\CityMaster::getAllCities();
                     ['class' => 'yii\grid\SerialColumn'],
                     [
                         'class' => 'yii\grid\ActionColumn',
-                        'template' => '{view} {update}', // Customize action buttons
+                        'template' => "<div class='d-flex gap-2'>{view}{update}</div>", // Customize action buttons
                         'buttons' => [
                             'view' => function ($url, $model, $key) {
                                 return Html::a('<i class="fa fa-eye"></i>', $url, ['class' => 'btn btn-sm btn-secondary', 'title' => 'View']);

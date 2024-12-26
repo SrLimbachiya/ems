@@ -3,7 +3,10 @@
 namespace app\controllers;
 
 use app\models\Designations;
+use app\models\Employee;
 use app\models\search\DesignationsSearch;
+use yii\filters\AccessControl;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -18,17 +21,25 @@ class DesignationsController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['logout'],
+                'rules' => [
+                    [
+                        'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
                     ],
                 ],
-            ]
-        );
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'logout' => ['post'],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -68,15 +79,19 @@ class DesignationsController extends Controller
     public function actionCreate()
     {
         $model = new Designations();
-
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                if ($model->save()) {
+                    \Yii::$app->getSession()->setFlash('success', 'Department created successfully.');
+                    return $this->redirect(['index']);
+                } else {
+                    \Yii::$app->getSession()->setFlash('danger', Html::errorSummary($model));
+                    return $this->redirect(['index']);
+                }
             }
         } else {
             $model->loadDefaultValues();
         }
-
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -93,9 +108,16 @@ class DesignationsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            if ($model->save()) {
+                \Yii::$app->getSession()->setFlash('success', 'Designation has been updated successfully.');
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                \Yii::$app->getSession()->setFlash('danger', Html::errorSummary($model));
+                return $this->redirect(\Yii::$app->request->referrer);
+            }
         }
+
 
         return $this->render('update', [
             'model' => $model,
@@ -111,8 +133,13 @@ class DesignationsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $checkEmp = Employee::find()->where(['designation' => $id])->exists();
+        if ($checkEmp) {
+            \Yii::$app->getSession()->setFlash('danger', 'Designation is associated with an employee, can not delete.');
+        } else {
+            \Yii::$app->getSession()->setFlash('success', 'Designation has been deleted.');
+            $this->findModel($id)->delete();
+        }
         return $this->redirect(['index']);
     }
 

@@ -3,7 +3,10 @@
 namespace app\controllers;
 
 use app\models\Departments;
+use app\models\Employee;
 use app\models\search\DepartmentsSearch;
+use yii\filters\AccessControl;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -18,17 +21,25 @@ class DepartmentsController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['logout'],
+                'rules' => [
+                    [
+                        'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
                     ],
                 ],
-            ]
-        );
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'logout' => ['post'],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -73,7 +84,9 @@ class DepartmentsController extends Controller
             if ($model->load($this->request->post())) {
                 if ($model->save()) {
                     \Yii::$app->getSession()->setFlash('success', 'Department created successfully.');
-//                    return $this->redirect(['view', 'id' => $model->id]);
+                    return $this->redirect(['index']);
+                } else {
+                    \Yii::$app->getSession()->setFlash('danger', Html::errorSummary($model));
                     return $this->redirect(['index']);
                 }
             }
@@ -97,8 +110,14 @@ class DepartmentsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            if ($model->save()) {
+                \Yii::$app->getSession()->setFlash('success', 'Department has been updated successfully.');
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                \Yii::$app->getSession()->setFlash('danger', Html::errorSummary($model));
+                return $this->redirect(\Yii::$app->request->referrer);
+            }
         }
 
         return $this->render('update', [
@@ -115,7 +134,14 @@ class DepartmentsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $checkEmp = Employee::find()->where(['department' => $id])->exists();
+
+        if ($checkEmp) {
+            \Yii::$app->getSession()->setFlash('danger', 'Department is associated with an employee, can not delete.');
+        } else {
+            \Yii::$app->getSession()->setFlash('success', 'Department has been deleted.');
+            $this->findModel($id)->delete();
+        }
 
         return $this->redirect(['index']);
     }

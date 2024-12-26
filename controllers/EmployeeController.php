@@ -83,14 +83,14 @@ class EmployeeController extends Controller
     {
         $model = new Employee();
         $model->id = HelperComponent::generateId();
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                if ($model->save()) {
-                    \Yii::$app->getSession()->setFlash('success', 'Employee created successfully.');
-                } else {
-                    \Yii::$app->getSession()->setFlash('danger', Html::errorSummary($model));
-                }
+
+        if ($model->load($this->request->post())) {
+            if ($model->save()) {
+                \Yii::$app->getSession()->setFlash('success', 'Employee created successfully.');
                 return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                \Yii::$app->getSession()->setFlash('danger', Html::errorSummary($model));
+                return $this->redirect(['index']);
             }
         } else {
             $model->loadDefaultValues();
@@ -112,8 +112,14 @@ class EmployeeController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            if ($model->save()) {
+                \Yii::$app->getSession()->setFlash('success', 'Employee Record updated successfully.');
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                \Yii::$app->getSession()->setFlash('danger', Html::errorSummary($model));
+                return $this->redirect(\Yii::$app->request->referrer);
+            }
         }
 
         return $this->render('update', [
