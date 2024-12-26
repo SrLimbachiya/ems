@@ -136,6 +136,15 @@ class DashboardController extends Controller
             ->groupBy('ems.category')->all();
 
 
+        $employeeType = (new \yii\db\Query())
+            ->select([
+                'ems.type as type',
+                'COUNT(ems.id) AS count',
+            ])
+            ->from('employee_records ems')
+            ->groupBy('ems.type')->all();
+
+
 
 
         return $this->render('index',[
@@ -146,6 +155,7 @@ class DashboardController extends Controller
             'dataProvider' => $dataProvider ?? [],
             'fullDataProvider' => $fullDataProvider ?? [],
             'categoryData' => $categoryData ?? [],
+            'empTypeData' => $employeeType ?? [],
         ]);
     }
 

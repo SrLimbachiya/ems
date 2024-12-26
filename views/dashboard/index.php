@@ -28,7 +28,6 @@ $cardHeight = '550px';
             </div>
         </div>
         <div class="card p-3 flex-grow shadow" style="height: 250px;">
-<!--            // cat-->
             <canvas id="category-chart" style="height: 100%; width:100%"></canvas>
         </div>
     </div>
@@ -37,12 +36,12 @@ $cardHeight = '550px';
         <div class="col-md-6 card p-3 shadow m-0" style="height: <?= $cardHeight ?>">
             <canvas id="designation-chart" style="height: 100%"></canvas>
         </div>
-        <div class="d-flex justify-content-between align-items-center col-md-5 card shadow ">
+        <div class="d-flex justify-content-between align-items-center col-md-5 card shadow " >
             <div style="border-bottom: 1px solid #F2F2F2" class="pb-4">
-                <canvas id="gender-chart" style="height: 100%; width:100%"></canvas>
+                <canvas id="gender-chart" style="height: 100%; width:93%"></canvas>
             </div>
-            <div>
-
+            <div class="pb-4">
+                <canvas id="type-chart" style="height: 100%; width:93%"></canvas>
             </div>
         </div>
     </div>
@@ -50,7 +49,7 @@ $cardHeight = '550px';
 
 <div class="row mt-3">
     <div class="search-form w-100">
-        <input class="p-3 w-100" type="text" id="department-filter" placeholder="Filter by Designation">
+        <input class="p-3 w-100" type="text" id="department-filter" placeholder="Filter by Department">
     </div>
     <div id="grid-container">
         <?= \yii\grid\GridView::widget([
@@ -83,6 +82,81 @@ $cardHeight = '550px';
 
 
 <script>
+
+
+
+    const EmployeeTypeChart = document.getElementById('type-chart').getContext('2d');
+    const empTypeRawData = <?= json_encode($empTypeData) ?>;
+    let empTypeData = [];
+    empTypeRawData.forEach(item => {
+        switch (item.type) {
+            case 'Permanent':
+                empTypeData[0] = item.count;
+                break;
+            case 'Contractual':
+                empTypeData[1] = item.count;
+                break;
+            default:
+                break;
+        }
+    })
+    new Chart(EmployeeTypeChart, {
+        type: 'pie',
+        data: {
+            labels: ['Permanent', 'Contractual'],
+            datasets: [
+                {
+                    label: 'Type Of Employee',
+                    data: empTypeData,
+                    backgroundColor: ['#a59eb8', '#8bb8d3'],
+                    borderColor: '#4549ff',
+                    borderWidth: 0,
+                },
+            ]
+        },
+        options: {
+            indexAxis: 'x',
+            responsive: true,
+            plugins: {
+                datalabels: {
+                    anchor: 'end', // Position at the top of the bar
+                    align: 'start', // Align the label above the top
+                    offset: 0, // Move label slightly above the top of the bar
+                    clip: false, // Ensure label is not clipped (visible outside chart area)
+                    color: 'rgb(255,255,255)', // Color of the labels
+                    font: {
+                        weight: 'bold',
+                    },
+                    formatter: function (value) {
+                        return value; // Display the actual data value
+                    }
+                },
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            let label = 'Total ';
+                            if (label) {
+                                label += context.label+': ';
+                            }
+                            if (context.parsed !== null) {
+                                label += context.parsed;
+                            }
+                            return label;
+                        }
+                    }
+                }
+            },
+        },
+        plugins: [ChartDataLabels] // Add this line to include the plugin
+    });
+
+
+
+
+
 
     const categoryChart = document.getElementById('category-chart').getContext('2d');
     const categoryData = <?= json_encode($categoryData) ?>;
@@ -239,10 +313,10 @@ $cardHeight = '550px';
     });
 
 
-    const papersByStatus = document.getElementById('gender-chart').getContext('2d');
-    const statusData = <?= json_encode($genderData) ?>;
+    const genderChart = document.getElementById('gender-chart').getContext('2d');
+    const genderRawData = <?= json_encode($genderData) ?>;
     let genderData = [];
-    statusData.forEach(item => {
+    genderRawData.forEach(item => {
         switch (item.gender) {
             case 'Male':
                 genderData[0] = item.count;
@@ -257,7 +331,7 @@ $cardHeight = '550px';
                 break;
         }
     })
-    new Chart(papersByStatus, {
+    new Chart(genderChart, {
         type: 'pie',
         data: {
             labels: ['Male', 'Female', 'Other'],
@@ -265,7 +339,7 @@ $cardHeight = '550px';
                 {
                     label: 'Gender',
                     data: genderData,
-                    backgroundColor: ['#9aa88c', '#8ca8a8', '#9a8ca8', '#aaaaaa', '#697f85', '#7a7290', '#497c9d'],
+                    backgroundColor: ['#98b6fa', '#fdc4f1', '#8e8e8e'],
                     borderColor: '#4549ff',
                     borderWidth: 0,
                 },

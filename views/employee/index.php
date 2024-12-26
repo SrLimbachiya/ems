@@ -29,10 +29,6 @@ $cities = \app\models\CityMaster::getAllCities();
 
         <div class="employee-index overflow-auto">
 
-
-
-
-            <!--    --><?php // echo $this->render('_search', ['model' => $searchModel]); ?>
             <?= Html::a('Reset Filters', ['index'], ['class' => 'btn btn-secondary float-right']) ?>
 
             <?= GridView::widget([
