@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="departments-view card shadow">
 
-    <div class="card-header d-flex justify-content-between">
+    <div class="card-header d-flex justify-content-between align-items-center">
         <h4><?= Html::encode($this->title) ?></h4>
 
         <div>
@@ -29,10 +29,15 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
     </div>
-    <div class="row card-body ml-3">
+    <div class="row card-body ml-3 gx-3 gy-2">
         <?= DetailView::widget([
             'model' => $model,
-            'template' => '<div style="width:45%; height: auto; min-height: 45px; padding:0px; border:solid 1px #c7c7c7; flex-grow: 1" class="mr-3 row mb-0 rounded mb-1"><div class="col-6 fw-bold d-flex align-items-center border-right">{label}</div><div class="col-6 d-flex align-items-center">{value}</div></div>',
+            'template' => '<div class="col-md-6 col-sm-12 d-flex flex-grow-1">
+                                    <div class="d-flex border rounded align-items-stretch w-100">
+                                        <div class="col-6 fw-bold p-3 border-end d-flex align-items-center">{label}</div>
+                                        <div class="col-6 p-3 d-flex align-items-center">{value}</div>
+                                    </div>
+                                </div>',
             'attributes' => [
                 'name',
                 'status',
