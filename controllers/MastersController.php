@@ -3,8 +3,11 @@
 namespace app\controllers;
 
 use app\models\CityMaster;
+use app\models\Departments;
+use app\models\Designations;
 use app\models\StateMaster;
 use components\HelperComponent;
+use components\Masters;
 use yii\helpers\Json;
 use components\SideBarMenuItems;
 use Yii;
@@ -78,11 +81,9 @@ class MastersController extends Controller
      */
     public function actionIndex()
     {
-        $masters = [
-            ['id' => 1, 'name' => 'Departments', 'link' => '/departments/index'],
-            ['id' => 2, 'name' => 'Designations', 'link' => '/designations/index'],
-        ];
-        return $this->render('index', ['items' => $masters]);
+        $departmentCount = Departments::find()->where(['status' => Masters::STATUS_ACTIVE])->count();
+        $designations = Designations::find()->where(['status' => Masters::STATUS_ACTIVE])->count();
+        return $this->render('index', ['designations' => $designations, 'departments' => $departmentCount]);
     }
 
 

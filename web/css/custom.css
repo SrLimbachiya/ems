@@ -2097,3 +2097,10 @@ input[type="radio"] {
     display: none;
 }
 
+.userAccount, .dropdown-menu  {
+    width:200px!important;
+}
+
+.dropdown-menu li h3  {
+    padding-left: 1rem;
+}

@@ -12,43 +12,29 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 
-<div class="row">
 
-    <div class="col-md-12">
-
-        <div class="card">
-
-            <div class="card-header">
-                <h3>
-                    <?php echo Html::encode($this->title) ?>
-                </h3>
+<div class="d-flex gap-3">
+    <div class="card shadow w-25">
+        <div class="card-body d-flex justify-content-between align-content-end">
+            <div>
+                <h1 style="font-size: 4rem;"><?= $departments ?? 0 ?></h1>
+                <h4>Departments</h4>
             </div>
-
-            <div class="card-body">
-                <div class="table-responsive">
-                    <?php echo GridView::widget([
-                        'dataProvider' => new ArrayDataProvider([
-                            'allModels' => $items,
-                        ]),
-                        'summary' => "",
-                        'columns' => [
-                            'name',
-                            ['attribute' => 'link',
-                                'label' => 'Action',
-                                'format' => 'raw',
-                                'value' => function ($data) {
-                                    return Html::a("<span class='fa fa-cog'></span>", [$data['link']], ['class' => "btn btn-secondary"]);
-                                }
-                            ]
-                        ]
-                    ]);
-                    ?>
-                </div>
-
+            <div class="align-self-end">
+                <?= Html::a('View', ['/departments/index'], ['class' => 'btn btn-primary']) ?>
             </div>
-
         </div>
-
     </div>
 
+    <div class="card shadow w-25">
+        <div class="card-body d-flex justify-content-between align-content-end">
+            <div>
+                <h1 style="font-size: 4rem;"><?= $designations ?? 0 ?></h1>
+                <h4>Designation</h4>
+            </div>
+            <div class="align-self-end">
+                <?= Html::a('View', ['/designations/index'], ['class' => 'btn btn-primary']) ?>
+            </div>
+        </div>
+    </div>
 </div>

@@ -5,8 +5,8 @@ namespace components;
 class Masters
 {
 
-    const STATUS_ACTIVE = 'ACTIVE';
-    const STATUS_INACTIVE = 'INACTIVE';
+    const STATUS_ACTIVE = 'Active';
+    const STATUS_INACTIVE = 'Inactive';
     const EMP_TYPE_PERMANENT = 'Permanent';
     const EMP_TYPE_CONTRACTUAL = 'Contractual';
 
