@@ -5,10 +5,10 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use app\models\Logs;
 
-$this->title = 'Department Logs';
+$this->title = 'Designation Logs';
 $this->params['breadcrumbs'][] = ['label' => 'Employee', 'url' => ['/dashboard/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Masters', 'url' => ['/masters/index']];
-$this->params['breadcrumbs'][] = ['label' => 'Departments', 'url' => ['/departments/index']];
+$this->params['breadcrumbs'][] = ['label' => 'Designation', 'url' => ['/designation/index']];
 $this->params['breadcrumbs'][] = Html::encode($this->title);
 
 $this->registerCSS("
@@ -30,12 +30,12 @@ $this->registerCSS("
 ");
 
 ?>
-<div class="card mb-2 shadow">
-    <div class="card-body d-flex justify-content-between align-items-center">
-        <h4><?= $this->title ?></h4>
-        <?= Html::a('Back', ['index'], ['class' => 'btn btn-secondary']) ?>
+    <div class="card mb-2 shadow">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <h4><?= $this->title ?></h4>
+            <?= Html::a('Back', ['index'], ['class' => 'btn btn-secondary']) ?>
+        </div>
     </div>
-</div>
     <div class="card p-5 shadow">
         <div class="profile-view">
             <ul class="updtlst">

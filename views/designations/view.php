@@ -42,11 +42,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'attributes' => [
                 'name',
                 'status',
-                'created_at',
-                'created_by',
-                'updated_at',
-                'updated_by',
-                'ip',
+                [
+                    'attribute' => 'created_at',
+                    'value' => function ($model) {
+                        return date('Y-m-d h:iA', $model->created_at);
+                    }
+                ],
+                [
+                    'attribute' => 'created_by',
+                    'value' => function ($model) {
+                        return \app\models\User::findIdentity($model->created_by)->username ?? 'NA';
+                    }
+                ],
             ],
         ]) ?>
     </div>

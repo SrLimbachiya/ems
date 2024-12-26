@@ -164,4 +164,9 @@ class DesignationsController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionLogs() {
+        $data = Logs::find()->where(['section_name' => Logs::SECTION_DESIGNATION])->orderBy(['created_at' => SORT_DESC])->all();
+        return $this->render("logs", ['model' => [], 'data' => $data]);
+    }
 }
