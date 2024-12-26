@@ -2,6 +2,12 @@
 
 namespace components;
 
+use app\models\CityMaster;
+use app\models\CountryMaster;
+use app\models\Departments;
+use app\models\Designations;
+use app\models\StateMaster;
+use app\models\User;
 use Ramsey\Uuid\Uuid;
 
 class HelperComponent
@@ -46,5 +52,35 @@ class HelperComponent
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+
+    public static function resolveDataByAttributeName($attributeName, $value)
+    {
+
+        $data = '';
+        switch ($attributeName) {
+            case 'employee_id':
+            case 'user_id':
+                $data = User::findIdentity($value);
+                break;
+            case 'department':
+                $data = Departments::resolveDepartmentName($value);
+                break;
+            case 'designation':
+                $data = Designations::resolveDesignationName($value);
+                break;
+            case 'country':
+                $data = CountryMaster::getCountryById($value);
+                break;
+            case 'state':
+                $data = StateMaster::getStateById($value);
+                break;
+            case 'city':
+                $data = CityMaster::getCityById($value);
+                break;
+            default:
+                $data = $value;
+        }
+        return $data;
     }
 }

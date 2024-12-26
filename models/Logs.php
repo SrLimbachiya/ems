@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use components\HelperComponent;
+use PHPUnit\TextUI\Help;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\helpers\Html;
@@ -126,4 +128,39 @@ class Logs extends ActiveRecord
             Yii::$app->session->setFlash('danger', "Log Error \n".Html::errorSummary($logModel));
         }
     }
+
+    public static function createdFieldsLog($id, $values)
+    {
+        $notToPrint = ['dependent_members', 'ip', 'updated_by', 'module', 'id', 'employee_id', 'dirty_values', 'user_id', 'emp_id', 'verified_status', 'status', 'created_at', 'updated_at', 'created_by', 'verified_by', 'verified_date', 'updated'];
+        $value = json_decode($values);
+        $field_result = "";
+        foreach ($value as $values) {
+            if (!in_array($values->key, $notToPrint) && !empty($values->value)) {
+
+                $field_result .= '<div class="flx-itm">';
+                $field_result .= "<p><span>" . ($values->label ?? '') . "</span>  :  " . Html::encode(HelperComponent::resolveDataByAttributeName($values->key, $values->value)) . "</p>";
+                $field_result .= "</div>";
+            }
+        }
+        return $field_result;
+    }
+
+    public static function get_field_changes_list($id, $values)
+    {
+        $value = json_decode($values);
+        $field_result = "";
+        foreach ($value as $values) {
+            if (property_exists($values, 'newValue') && isset($values->newValue)) {
+                $oldValue = HelperComponent::resolveDataByAttributeName($values->key, $values->value);
+                $newVal = HelperComponent::resolveDataByAttributeName($values->key, $values->newValue);
+                $field_result .= '<div class="flx-itm">';
+                $field_result .= "<p><span>" . $values->label . "</span> Changed</p>";
+                $field_result .= "<p><span>From </span> " . Html::encode($oldValue) . "</p>";
+                $field_result .= "<p><span>To </span> " . Html::encode($newVal) . "</p>";
+                $field_result .= "</div>";
+            }
+        }
+        return $field_result;
+    }
+
 }

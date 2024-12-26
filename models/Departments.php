@@ -37,7 +37,7 @@ class Departments extends \yii\db\ActiveRecord
         return [
             [['name', 'status'], 'required'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['id'], 'string', 'max' => 50],
+            [['id'], 'integer'],
             [['name'], 'string', 'max' => 100],
             [['status'], 'string', 'max' => 10],
             [['ip'], 'string', 'max' => 20],

@@ -110,7 +110,7 @@ class DepartmentsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $oldAttributes = $model->attributes();
+        $oldAttributes = $model->getAttributes();
         if ($this->request->isPost && $model->load($this->request->post())) {
             if ($model->save()) {
                 Logs::addLog($model, $oldAttributes, Logs::TYPE_UPDATED, Logs::SECTION_DEPARTMENT, $model->id);
@@ -164,7 +164,11 @@ class DepartmentsController extends Controller
         if (($model = Departments::findOne(['id' => $id])) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionLogs() {
+        $data = Logs::find()->where(['section_name' => Logs::SECTION_DEPARTMENT])->orderBy(['created_at' => SORT_DESC])->all();
+        return $this->render("logs", ['model' => [], 'data' => $data]);
     }
 }

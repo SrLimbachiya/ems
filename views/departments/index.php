@@ -18,7 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card-header d-flex justify-content-between align-items-center">
         <h4><?= Html::encode($this->title) ?></h4>
 
-        <?= Html::a('Create Departments', ['create'], ['class' => 'btn btn-success']) ?>
+        <div>
+            <?= Html::a('Logs', ['logs'], ['class' => 'btn btn-secondary']) ?>
+            <?= Html::a('Create Departments', ['create'], ['class' => 'btn btn-success']) ?>
+        </div>
     </div>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
