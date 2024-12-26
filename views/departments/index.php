@@ -11,6 +11,8 @@ use yii\grid\GridView;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Departments';
+$this->params['breadcrumbs'][] = ['label' => 'Employee', 'url' => ['/dashboard/index']];
+$this->params['breadcrumbs'][] = ['label' => 'Masters', 'url' => ['/masters/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="departments-index card shadow">

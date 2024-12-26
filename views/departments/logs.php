@@ -5,11 +5,13 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use app\models\Logs;
 
-$this->title = 'History';
+$this->title = 'Department Logs';
+$this->params['breadcrumbs'][] = ['label' => 'Employee', 'url' => ['/dashboard/index']];
+$this->params['breadcrumbs'][] = ['label' => 'Masters', 'url' => ['/masters/index']];
+$this->params['breadcrumbs'][] = ['label' => 'Departments', 'url' => ['/departments/index']];
 $this->params['breadcrumbs'][] = Html::encode($this->title);
 
 $this->registerCSS("
-
 
 .col.navbar-nav.me-auto.mb-2.mb-md-0{
     padding:0 !important;
