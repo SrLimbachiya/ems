@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Designations;
 use app\models\Employee;
+use app\models\Logs;
 use app\models\search\DesignationsSearch;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
@@ -82,6 +83,7 @@ class DesignationsController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->save()) {
+                    Logs::addLog($model, [], Logs::TYPE_CREATED, Logs::SECTION_DESIGNATION, $model->id);
                     \Yii::$app->getSession()->setFlash('success', 'Department created successfully.');
                     return $this->redirect(['index']);
                 } else {
@@ -107,9 +109,10 @@ class DesignationsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $oldAttributes = $model->getAttributes();
         if ($this->request->isPost && $model->load($this->request->post())) {
             if ($model->save()) {
+                Logs::addLog($model, $oldAttributes, Logs::TYPE_UPDATED, Logs::SECTION_DESIGNATION, $model->id);
                 \Yii::$app->getSession()->setFlash('success', 'Designation has been updated successfully.');
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
@@ -117,7 +120,6 @@ class DesignationsController extends Controller
                 return $this->redirect(\Yii::$app->request->referrer);
             }
         }
-
 
         return $this->render('update', [
             'model' => $model,
@@ -134,11 +136,15 @@ class DesignationsController extends Controller
     public function actionDelete($id)
     {
         $checkEmp = Employee::find()->where(['designation' => $id])->exists();
+        $model = $this->findModel($id);
         if ($checkEmp) {
             \Yii::$app->getSession()->setFlash('danger', 'Designation is associated with an employee, can not delete.');
         } else {
-            \Yii::$app->getSession()->setFlash('success', 'Designation has been deleted.');
-            $this->findModel($id)->delete();
+            if (!empty($model)) {
+                Logs::addLog($model, [], Logs::TYPE_DELETED, Logs::SECTION_DESIGNATION, $model->id);
+                \Yii::$app->getSession()->setFlash('success', 'Designation has been deleted.');
+                $model->delete();
+            }
         }
         return $this->redirect(['index']);
     }

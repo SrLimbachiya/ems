@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Departments;
 use app\models\Designations;
 use app\models\Employee;
+use app\models\Logs;
 use app\models\search\EmployeeSearch;
 use components\HelperComponent;
 use Faker\Factory;
@@ -86,6 +87,7 @@ class EmployeeController extends Controller
 
         if ($model->load($this->request->post())) {
             if ($model->save()) {
+                Logs::addLog($model, [], Logs::TYPE_CREATED, Logs::SECTION_EMPLOYEE, $model->id);
                 \Yii::$app->getSession()->setFlash('success', 'Employee created successfully.');
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
@@ -111,9 +113,10 @@ class EmployeeController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $oldAttributes = $model->getAttributes();
         if ($this->request->isPost && $model->load($this->request->post())) {
             if ($model->save()) {
+                Logs::addLog($model, $oldAttributes, Logs::TYPE_UPDATED, Logs::SECTION_EMPLOYEE, $model->id);
                 \Yii::$app->getSession()->setFlash('success', 'Employee Record updated successfully.');
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
@@ -136,8 +139,11 @@ class EmployeeController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        if (!empty($model)) {
+            Logs::addLog($model, [], Logs::TYPE_DELETED, Logs::SECTION_EMPLOYEE, $model->id);
+            $model->delete();
+        }
         return $this->redirect(['index']);
     }
 
@@ -179,6 +185,7 @@ class EmployeeController extends Controller
             $employee->retirement_date = $faker->date('Y-m-d', '2050-01-01');
             $employee->gender = $faker->randomElement(['Male', 'Female', 'Other']);
             $employee->category = $faker->randomElement(['General', 'OBC', 'SC', 'ST']);
+            $employee->type = $faker->randomElement(['Permanent', 'Contractual']);
             $employee->country = $faker->country;
             $employee->state = $faker->state;
             $employee->city = $faker->city;

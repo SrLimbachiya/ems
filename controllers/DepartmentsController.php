@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Departments;
 use app\models\Employee;
+use app\models\Logs;
 use app\models\search\DepartmentsSearch;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
@@ -79,10 +80,10 @@ class DepartmentsController extends Controller
     public function actionCreate()
     {
         $model = new Departments();
-
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->save()) {
+                    Logs::addLog($model, [], Logs::TYPE_CREATED, Logs::SECTION_DEPARTMENT, $model->id);
                     \Yii::$app->getSession()->setFlash('success', 'Department created successfully.');
                     return $this->redirect(['index']);
                 } else {
@@ -109,9 +110,10 @@ class DepartmentsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $oldAttributes = $model->attributes();
         if ($this->request->isPost && $model->load($this->request->post())) {
             if ($model->save()) {
+                Logs::addLog($model, $oldAttributes, Logs::TYPE_UPDATED, Logs::SECTION_DEPARTMENT, $model->id);
                 \Yii::$app->getSession()->setFlash('success', 'Department has been updated successfully.');
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
@@ -135,14 +137,18 @@ class DepartmentsController extends Controller
     public function actionDelete($id)
     {
         $checkEmp = Employee::find()->where(['department' => $id])->exists();
-
+        $model = $this->findModel($id);
         if ($checkEmp) {
             \Yii::$app->getSession()->setFlash('danger', 'Department is associated with an employee, can not delete.');
         } else {
-            \Yii::$app->getSession()->setFlash('success', 'Department has been deleted.');
-            $this->findModel($id)->delete();
+            if (!empty($model)) {
+                Logs::addLog($model, [], Logs::TYPE_DELETED, Logs::SECTION_DEPARTMENT, $model->id);
+                \Yii::$app->getSession()->setFlash('success', 'Department has been deleted.');
+                $model->delete();
+            } else {
+                \Yii::$app->getSession()->setFlash('danger', 'Invalid Request.');
+            }
         }
-
         return $this->redirect(['index']);
     }
 
