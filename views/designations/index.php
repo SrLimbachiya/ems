@@ -32,6 +32,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
+            'pager' => [
+                'options' => ['class' => 'pagination pagination-sm'],
+                'activePageCssClass' => 'active',
+                'maxButtonCount' => 5,
+                'linkOptions' => [
+                    'class' => 'page-link', // Custom class for <a> elements
+                ],
+            ],
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
                 'name',
