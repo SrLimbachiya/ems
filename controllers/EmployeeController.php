@@ -163,6 +163,14 @@ class EmployeeController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    public function actionLogs($id) {
+        $data = Logs::find()->where(['section_name' => Logs::SECTION_EMPLOYEE, 'data_id' => $id])->orderBy(['created_at' => SORT_DESC])->all();
+        $model = Employee::findOne($id);
+        return $this->render('logs', [
+            'data' => $data,
+            'model' => $model
+        ]);
+    }
 
     public function actionGenerateEmployees($count = 100)
     {

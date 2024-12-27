@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var app\models\Employee $model */
 
 $this->title = $model->first_name . ' ' . $model->last_name . ' (' . $model->employee_code . ')';
-$this->params['breadcrumbs'][] = ['label' => 'Employees', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'All Employees', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 
@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card-header d-flex justify-content-between align-items-center">
         <h3><?= Html::encode($this->title) ?></h3>
         <div>
+            <?= Html::a('Logs', ['logs', 'id' => $model->id], ['class' => 'btn btn-secondary']) ?>
             <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
             <?= Html::a('Delete', ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
