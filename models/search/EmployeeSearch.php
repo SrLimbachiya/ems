@@ -88,6 +88,7 @@ class EmployeeSearch extends Employee
             ->andFilterWhere(['like', 'status', $this->status])
             ->andFilterWhere(['like', 'ip', $this->ip]);
 
+        $query->orderBy('updated_at DESC');
         return $dataProvider;
     }
 }
