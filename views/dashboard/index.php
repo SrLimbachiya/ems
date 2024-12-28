@@ -12,10 +12,12 @@ $cardHeight = '550px';
             margin: 0 !important;
             padding: 0 !important;
         }
+
         #sidebar-wrapper-level2 {
             margin: 0 !important;
             padding: 0 !important;
         }
+
         .container {
             display: flex;
             justify-content: center; /* Horizontally center */
@@ -34,70 +36,71 @@ $cardHeight = '550px';
             <!-- First Card Section -->
             <div class="card flex-grow-1 col-md-6 col-12 shadow d-flex flex-column justify-content-between align-items-stretch"
                  style="height: 100%;">
-                <div class="d-flex justify-content-between pt-5 mb-4 style="width: 100%; height: 40%;">
-                    <div class="text-center d-flex flex-column justify-content-center align-items-center"
-                         style="width: 50%; border-right: 1px solid #F2F2F2;">
-                        <h1 class="fw-bold"><?= $empCount['active_emp'] ?></h1>
-                        <p>Active Employees</p>
-                    </div>
-                    <div class="text-center d-flex flex-column justify-content-center align-items-center" style="width: 50%;">
-                        <h1 class="fw-bold"><?= $empCount['inactive_emp'] ?></h1>
-                        <p>In-Active Employees</p>
-                    </div>
+                <div class="d-flex justify-content-between pt-5 mb-4 style=" width: 100%; height: 40%;
+                ">
+                <div class="text-center d-flex flex-column justify-content-center align-items-center"
+                     style="width: 50%; border-right: 1px solid #F2F2F2;">
+                    <h1 class="fw-bold"><?= $empCount['active_emp'] ?></h1>
+                    <p>Active Employees</p>
                 </div>
-                <hr>
-                <div class="d-flex flex-column  justify-content-center align-items-center text-center"
-                     style="width: 100%; height: 50%;">
-                    <h1 class="fw-bold" style="font-size: 4rem"><?= $empCount['total_emp'] ?></h1>
-                    <div id="totalEmps">
-                        <a class="text-dark" href="<?= \yii\helpers\Url::to(['/employee/index']) ?>">
-                            <p id="empText">Total Employees</p>
-                        </a>
-                    </div>
+                <div class="text-center d-flex flex-column justify-content-center align-items-center"
+                     style="width: 50%;">
+                    <h1 class="fw-bold"><?= $empCount['inactive_emp'] ?></h1>
+                    <p>In-Active Employees</p>
                 </div>
             </div>
-
-            <!-- Second Section -->
-            <div class="col-md-5 d-flex flex-column gap-2" style="height: 100%;">
-                <div class="card shadow flex-grow-1 d-flex justify-content-center align-items-center text-center">
-                    <h2 style="font-size: 3rem"><?= $fullDataProvider->getCount() ?? 0 ?></h2>
-                    <div id="totalEmps">
-                        <a class="text-dark" href="<?= \yii\helpers\Url::to(['/departments/index']) ?>">
-                            <p id="empText">Total Departments</p>
-                        </a>
-                    </div>
-                </div>
-                <div class="card shadow flex-grow-1 d-flex justify-content-center align-items-center text-center">
-                    <h2 style="font-size: 3rem"><?= count($designationData) ?></h2>
-                    <div id="totalEmps">
-                        <a class="text-dark" href="<?= \yii\helpers\Url::to(['/designations/index']) ?>">
-                            <p id="empText">Total Designations</p>
-                        </a>
-                    </div>
+            <hr>
+            <div class="d-flex flex-column  justify-content-center align-items-center text-center"
+                 style="width: 100%; height: 50%;">
+                <h1 class="fw-bold" style="font-size: 4rem"><?= $empCount['total_emp'] ?></h1>
+                <div id="totalEmps">
+                    <a class="text-dark" href="<?= \yii\helpers\Url::to(['/employee/index']) ?>">
+                        <p id="empText">Total Employees</p>
+                    </a>
                 </div>
             </div>
         </div>
 
-
-
-        <div class="card p-3 flex-grow shadow" style="height: 250px;">
-            <canvas id="category-chart" style="height: 100%; width:100%"></canvas>
-        </div>
-    </div>
-
-    <div class="col-md-7 row p-0 flex-grow-1 gap-3" style="height: 100%">
-        <div class="col-md-6 card p-3 shadow m-0" style="height: <?= $cardHeight ?>">
-            <canvas id="designation-chart" style="height: 100%"></canvas>
-        </div>
-        <div class="d-flex justify-content-between align-items-center col-md-5 card shadow " >
-            <div style="border-bottom: 1px solid #F2F2F2" class="pb-4">
-                <canvas id="gender-chart" style="height: 100%; width:93%"></canvas>
+        <!-- Second Section -->
+        <div class="col-md-5 d-flex flex-column gap-2" style="height: 100%;">
+            <div class="card shadow flex-grow-1 d-flex justify-content-center align-items-center text-center">
+                <h2 style="font-size: 3rem"><?= $fullDataProvider->getCount() ?? 0 ?></h2>
+                <div id="totalEmps">
+                    <a class="text-dark" href="<?= \yii\helpers\Url::to(['/departments/index']) ?>">
+                        <p id="empText">Total Departments</p>
+                    </a>
+                </div>
             </div>
-            <div class="pb-4">
-                <canvas id="type-chart" style="height: 100%; width:93%"></canvas>
+            <div class="card shadow flex-grow-1 d-flex justify-content-center align-items-center text-center">
+                <h2 style="font-size: 3rem"><?= count($designationData) ?></h2>
+                <div id="totalEmps">
+                    <a class="text-dark" href="<?= \yii\helpers\Url::to(['/designations/index']) ?>">
+                        <p id="empText">Total Designations</p>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+
+
+    <div class="card p-3 flex-grow shadow" style="height: 250px;">
+        <canvas id="category-chart" style="height: 100%; width:100%"></canvas>
+    </div>
+</div>
+
+<div class="col-md-7 row p-0 flex-grow-1 gap-3" style="height: 100%">
+    <div class="col-md-6 card p-3 shadow m-0" style="height: <?= $cardHeight ?>">
+        <canvas id="designation-chart" style="height: 100%"></canvas>
+    </div>
+    <div class="d-flex justify-content-between align-items-center col-md-5 card shadow ">
+        <div style="border-bottom: 1px solid #F2F2F2" class="pb-4">
+            <canvas id="gender-chart" style="height: 100%; width:93%"></canvas>
+        </div>
+        <div class="pb-4">
+            <canvas id="type-chart" style="height: 100%; width:93%"></canvas>
+        </div>
+    </div>
+</div>
 </div>
 
 <div class="row card mt-3 m-1 shadow">
@@ -122,7 +125,7 @@ $cardHeight = '550px';
                     'label' => 'Department',
                     'format' => 'raw',
                     'value' => function ($model) {
-                        return \yii\helpers\Html::a($model['name'], ['/employee/index', 'EmployeeSearch' => ['department' => $model['id']]],['class' => 'text-black']);
+                        return \yii\helpers\Html::a($model['name'], ['/employee/index', 'EmployeeSearch' => ['department' => $model['id']]], ['class' => 'text-black']);
                     }
                 ],
                 [
@@ -143,7 +146,6 @@ $cardHeight = '550px';
 
 
 <script>
-
 
 
     const EmployeeTypeChart = document.getElementById('type-chart').getContext('2d');
@@ -200,7 +202,7 @@ $cardHeight = '550px';
                         label: function (context) {
                             let label = 'Total ';
                             if (label) {
-                                label += context.label+': ';
+                                label += context.label + ': ';
                             }
                             if (context.parsed !== null) {
                                 label += context.parsed;
@@ -213,10 +215,6 @@ $cardHeight = '550px';
         },
         plugins: [ChartDataLabels] // Add this line to include the plugin
     });
-
-
-
-
 
 
     const categoryChart = document.getElementById('category-chart').getContext('2d');
@@ -265,7 +263,7 @@ $cardHeight = '550px';
                 tooltip: {
                     callbacks: {
                         label: function (context) {
-                            let label = context.label+' Employees: ';
+                            let label = context.label + ' Employees: ';
                             if (context.parsed.y !== null) {
                                 label += context.parsed.y;
                             }
@@ -431,7 +429,7 @@ $cardHeight = '550px';
                         label: function (context) {
                             let label = 'Total ';
                             if (label) {
-                                label += context.label+': ';
+                                label += context.label + ': ';
                             }
                             if (context.parsed !== null) {
                                 label += context.parsed;

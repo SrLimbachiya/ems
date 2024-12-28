@@ -10,6 +10,9 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 
+/**
+ *
+ */
 class SiteController extends Controller
 {
     /**
@@ -59,6 +62,9 @@ class SiteController extends Controller
 //        ];
 //    }
 
+    /**
+     * @return Response
+     */
     public function actionError()
     {
         $exception = Yii::$app->errorHandler->exception;
@@ -71,7 +77,6 @@ class SiteController extends Controller
         // Handle other errors if needed
 //        return $this->render('error', ['exception' => $exception, 'name' => 'some error', 'message' => 'some message']);
     }
-
 
 
     /**

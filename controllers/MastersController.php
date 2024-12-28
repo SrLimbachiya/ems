@@ -18,6 +18,9 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 
+/**
+ *
+ */
 class MastersController extends Controller
 {
     /**
@@ -63,7 +66,13 @@ class MastersController extends Controller
     }
 
 
-    public function beforeAction($action) {
+    /**
+     * @param $action
+     * @return bool
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function beforeAction($action)
+    {
         if (!parent::beforeAction($action)) {
             return false;
         }
@@ -87,14 +96,25 @@ class MastersController extends Controller
     }
 
 
-    public function actionDepartments() {
+    /**
+     * @return void
+     */
+    public function actionDepartments()
+    {
         var_dump('DEPARTMENTS');
     }
 
-    public function actionDesignations() {
+    /**
+     * @return void
+     */
+    public function actionDesignations()
+    {
         var_dump('DEPARTMENTS');
     }
 
+    /**
+     * @return string
+     */
     public function actionGetState()
     { // this function will get all POSTS from OU
         $out = [];
@@ -117,6 +137,9 @@ class MastersController extends Controller
         return Json::encode(['output' => '', 'selected' => '']);
     }
 
+    /**
+     * @return string
+     */
     public function actionGetCity()
     { // this function will get all POSTS from OU
         $out = [];

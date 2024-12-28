@@ -13,6 +13,9 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 
+/**
+ *
+ */
 class DashboardController extends Controller
 {
     /**
@@ -58,7 +61,13 @@ class DashboardController extends Controller
     }
 
 
-    public function beforeAction($action) {
+    /**
+     * @param $action
+     * @return bool
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function beforeAction($action)
+    {
         if (!parent::beforeAction($action)) {
             return false;
         }
@@ -145,9 +154,7 @@ class DashboardController extends Controller
             ->groupBy('ems.type')->all();
 
 
-
-
-        return $this->render('index',[
+        return $this->render('index', [
             'empCount' => $empCount[0] ?? ['active_emp' => 0, 'inactive_emp' => 0, 'total_emp' => 0],
             'genderData' => $genderRaw ?? [],
             'designationData' => $designationRaw ?? [],
