@@ -66,30 +66,6 @@ Yii::$app->params['left-side-menu-item'] = SideBarMenuItems::getAdminItems();
     </div>
 </div>
 
-<!-- Sticky Keyboard Utility Bottom-Right Button -->
-<div class="keyboard-pos dropup dropdown-2">
-    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false" style="border-color: transparent; background-color: transparent;">
-<!--        // img-->
-<!--        <img class="img-fluid" src="--><?php //= $samarthAsset->baseUrl . '/img/icon-keyboard.svg' ?><!--">-->
-    </button>
-    <div class="dropdown-menu keyboard">
-        <!-- Dropdown menu links -->
-        <!--<a class="dropdown-item" href="#" id="searchClick">Search<span class="badge badge-ctrl pen-apv">Alt (⌥) + S</span></a>-->
-        <?php if (empty(Yii::$app->params['left-side-menu-item'])) { ?>
-            <a class="dropdown-item" href="#" id="sidebarCollapse2">Toggle Main Sidebar<span
-                    class="badge badge-ctrl pen-apv">Alt (⌥) + K</span></a>
-        <?php } ?>
-        <?php
-        if (!empty(Yii::$app->params['left-side-menu-item'])) { ?>
-            <a class="dropdown-item" href="#" id="sidebarCollapse3">Toggle Inner Sidebar<span
-                    class="badge badge-ctrl pen-apv">Alt (⌥) + ;</span></a>
-        <?php } ?>
-        <a class="dropdown-item" href="#" id="logoutClick">Logout<span
-                class="badge badge-ctrl pen-apv">Alt (⌥) + E</span></a>
-    </div>
-</div>
-
 
 <!-- Footer -->
 <?= $this->render('footer') ?>
