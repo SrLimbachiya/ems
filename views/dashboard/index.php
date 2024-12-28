@@ -60,17 +60,17 @@ $cardHeight = '550px';
             <!-- Second Section -->
             <div class="col-md-5 d-flex flex-column gap-2" style="height: 100%;">
                 <div class="card shadow flex-grow-1 d-flex justify-content-center align-items-center text-center">
-                    <h2 style="font-size: 3rem"><?= $empCount['total_emp'] ?></h2>
+                    <h2 style="font-size: 3rem"><?= $fullDataProvider->getCount() ?? 0 ?></h2>
                     <div id="totalEmps">
-                        <a class="text-dark" href="<?= \yii\helpers\Url::to(['/employee/index']) ?>">
+                        <a class="text-dark" href="<?= \yii\helpers\Url::to(['/departments/index']) ?>">
                             <p id="empText">Total Departments</p>
                         </a>
                     </div>
                 </div>
                 <div class="card shadow flex-grow-1 d-flex justify-content-center align-items-center text-center">
-                    <h2 style="font-size: 3rem"><?= $empCount['total_emp'] ?></h2>
+                    <h2 style="font-size: 3rem"><?= count($designationData) ?></h2>
                     <div id="totalEmps">
-                        <a class="text-dark" href="<?= \yii\helpers\Url::to(['/employee/index']) ?>">
+                        <a class="text-dark" href="<?= \yii\helpers\Url::to(['/designations/index']) ?>">
                             <p id="empText">Total Designations</p>
                         </a>
                     </div>
