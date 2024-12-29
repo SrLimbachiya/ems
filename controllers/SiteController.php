@@ -8,7 +8,6 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
-use app\models\ContactForm;
 
 /**
  *
@@ -40,27 +39,6 @@ class SiteController extends Controller
             ],
         ];
     }
-
-    /**
-     * {@inheritdoc}
-     */
-
-//    public function actions()
-//    {
-//        return [
-//            'error' => [
-//                'class' => 'yii\web\ErrorAction',
-//                'on beforeRender' => function ($event) {
-//                    $exception = Yii::$app->errorHandler->exception;
-//
-//                    if ($exception instanceof \yii\web\NotFoundHttpException) {
-//                        Yii::$app->response->redirect(['dashboard/index'])->send();
-//                        Yii::$app->end();
-//                    }
-//                },
-//            ],
-//        ];
-//    }
 
     /**
      * @return Response
@@ -114,31 +92,4 @@ class SiteController extends Controller
         return $this->redirect(['login']);
     }
 
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
 }
