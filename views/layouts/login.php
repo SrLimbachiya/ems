@@ -3,21 +3,14 @@
 /* @var $this \yii\web\View */
 
 /* @var $content string */
-
-use app\themes\samarth3\assets\SamarthThemeAsset;
-use app\models\ApplicationControl;
 use app\models\Employee;
-use uims\core\modules\core\models\Session;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use yii\widgets\Menu;
-use app\themes\samarthimg\SamarthImageAsset;
-
 \app\assets\AppAsset::register($this);
 
-$this->title = 'Login - Samarth eGov Suite';
-//var_dump(ApplicationControl::getVariable('app_name'));die;
+$this->title = 'EMS - Login';
 
 ?>
 
@@ -36,7 +29,6 @@ $this->title = 'Login - Samarth eGov Suite';
         <title>
             <?= Html::encode($this->title) ?>
         </title>
-<!--        <link rel="shortcut icon" href="--><?php //= $samarthAsset->baseUrl . '/img/favicon.ico' ?><!--"/>-->
         <?php $this->head() ?>
         <?php
         $headers = Yii::$app->response->headers;

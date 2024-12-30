@@ -1,13 +1,8 @@
 <?php
 
-use uims\user\modules\jiuser\models\User;
-use uims\user\modules\jiuser\models\UserModuleControl;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use app\models\ApplicationControl;
 use yii\widgets\Breadcrumbs;
-use app\themes\samarthimg\SamarthImageAsset;
-use uims\core\modules\core\models\Institutions;
 
 \app\assets\AppAsset::register($this);
 ?>
@@ -41,8 +36,6 @@ use uims\core\modules\core\models\Institutions;
 <nav class="navbar navbar-dark height navbar-expand-md bg-nav border-bottom" aria-label="Main Site Navigation">
 
     <div class="container-fluid">
-
-        <!-- Samarth eGov | Main Logo -->
 
         <a href="<?php Url::to(['/site']) ?>">
             <div class="d-flex">

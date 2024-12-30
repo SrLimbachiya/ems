@@ -3,11 +3,6 @@
 use components\SideBarMenuItems;
 use yii\helpers\Url;
 use yii\helpers\Html;
-use app\themes\samarth3\assets\SamarthThemeAsset;
-use app\themes\samarthimg\SamarthImageAsset;
-use app\models\ApplicationControl;
-use uims\user\modules\jiuser\models\User;
-use uims\core\modules\core\models\PortalContent;
 $home = Yii::$app->request->BaseUrl;
 \app\assets\AppAsset::register($this);
 
@@ -22,7 +17,6 @@ Yii::$app->params['left-side-menu-item'] = SideBarMenuItems::getAdminItems();
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <!--    // add favicon-->
-<!--    <link rel="shortcut icon" href="--><?php //= $samarthAsset->baseUrl . '/img/favicon.ico' ?><!--"/>-->
     <?= Html::csrfMetaTags() ?>
     <title>
         <?= Html::encode($this->title) ?>
